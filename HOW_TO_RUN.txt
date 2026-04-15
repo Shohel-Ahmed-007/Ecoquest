@@ -1,0 +1,144 @@
+================================================================
+              ECOQUEST - HOW TO RUN THE PROJECT
+================================================================
+
+PREREQUISITES
+----------------------------------------------------------------
+You need Docker Desktop installed on your machine.
+
+  Windows / Mac:
+    1. Go to https://www.docker.com/products/docker-desktop
+    2. Download Docker Desktop for your OS
+    3. Run the installer and follow the setup wizard
+    4. After installation, launch Docker Desktop
+    5. Wait for the Docker engine to start (whale icon in taskbar)
+
+
+STEP 1 — GET THE PROJECT
+----------------------------------------------------------------
+If you have the project folder already, skip this step.
+
+  Option A: Copy the folder to your machine
+
+  Option B: Clone from Git (if hosted):
+    git clone <repo-url>
+    cd sohail
+
+
+STEP 2 — OPEN A TERMINAL IN THE PROJECT FOLDER
+----------------------------------------------------------------
+  Windows:  Right-click the folder → "Open in Terminal"
+  Mac:      Right-click the folder → "New Terminal at Folder"
+
+  You should be in the folder that contains:
+    docker-compose.yml
+    frontend/
+    backend/
+
+
+STEP 3 — BUILD AND START THE PROJECT
+----------------------------------------------------------------
+  Run this single command:
+
+    docker compose up --build
+
+  This will:
+    - Download required base images (Node, Nginx, MongoDB)
+    - Build the frontend (React app)
+    - Build the backend (Node.js API)
+    - Start all three services
+
+  First run takes 3–5 minutes. Subsequent runs are much faster.
+
+  To run in the background (detached mode):
+
+    docker compose up --build -d
+
+
+STEP 4 — OPEN THE APP
+----------------------------------------------------------------
+  Once you see "ecoquest-frontend started" in the terminal,
+  open your browser and go to:
+
+    http://localhost
+
+  The app should load the EcoQuest homepage.
+
+
+STEP 5 — SEED SAMPLE DATA (First time only)
+----------------------------------------------------------------
+  To populate the database with demo users and tasks:
+
+    docker compose exec backend node seed.js
+
+  This creates:
+    Teacher account:
+      Email:    teacher@ecoquest.com
+      Password: teacher123
+
+    Student accounts (4 students):
+      Email:    rahul@ecoquest.com
+      Password: student123
+
+      Email:    priya@ecoquest.com
+      Password: student123
+
+      (and 2 more students with password: student123)
+
+    Also creates:
+      - 8 sample eco tasks
+      - 1 sample quiz
+
+
+STEP 6 — USE THE APP
+----------------------------------------------------------------
+  Teacher login → http://localhost/login
+    - Create tasks and quizzes
+    - Review student submissions
+    - View analytics
+
+  Student login → http://localhost/login
+    - Complete tasks and upload photo proof
+    - Take quizzes and earn XP
+    - View leaderboard and analytics
+
+
+STOPPING THE PROJECT
+----------------------------------------------------------------
+  If running in foreground:
+    Press Ctrl+C
+
+  If running in background:
+    docker compose down
+
+  To also delete the database data:
+    docker compose down -v
+
+
+TROUBLESHOOTING
+----------------------------------------------------------------
+  Port 80 already in use?
+    Change the frontend port in docker-compose.yml:
+      ports:
+        - "8080:80"     <-- change 80 to 8080
+    Then open http://localhost:8080
+
+  Database not connecting?
+    Make sure Docker Desktop is running before starting.
+    Wait a few seconds and try refreshing.
+
+  Changes not showing?
+    docker compose down
+    docker compose up --build
+
+  View logs for a specific service:
+    docker compose logs backend
+    docker compose logs frontend
+    docker compose logs mongo
+
+
+================================================================
+  App runs at:    http://localhost
+  API runs at:    http://localhost/api
+  MongoDB port:   27017 (internal only)
+================================================================
