@@ -11,8 +11,11 @@ import QuizPage from './pages/QuizPage';
 import CivicHub from './pages/CivicHub';
 import Leaderboard from './pages/Leaderboard';
 import Analytics from './pages/Analytics';
+<<<<<<< HEAD
 import VerifyEmail from './pages/VerifyEmail';
 import Profile from './pages/Profile';
+=======
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
 
 function ProtectedRoute({ children, role }) {
   const { user } = useAuth();
@@ -26,10 +29,16 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+<<<<<<< HEAD
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/login" element={user ? <Navigate to={user.role === 'teacher' ? '/teacher' : '/dashboard'} /> : <Login />} />
       <Route path="/register" element={user ? <Navigate to={user.role === 'teacher' ? '/teacher' : '/dashboard'} /> : <Register />} />
       <Route path="/onboarding" element={<ProtectedRoute>{user?.interests?.length > 0 ? <Navigate to={user.role === 'teacher' ? '/teacher' : '/dashboard'} /> : <Onboarding />}</ProtectedRoute>} />
+=======
+      <Route path="/login" element={user ? <Navigate to={user.role === 'teacher' ? '/teacher' : '/dashboard'} /> : <Login />} />
+      <Route path="/register" element={user ? <Navigate to="/onboarding" /> : <Register />} />
+      <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
       <Route path="/dashboard" element={<ProtectedRoute role="student"><StudentDashboard /></ProtectedRoute>} />
       <Route path="/teacher" element={<ProtectedRoute role="teacher"><TeacherDashboard /></ProtectedRoute>} />
       <Route path="/learn" element={<ProtectedRoute><LearnPage /></ProtectedRoute>} />
@@ -37,7 +46,10 @@ function AppRoutes() {
       <Route path="/civic" element={<ProtectedRoute><CivicHub /></ProtectedRoute>} />
       <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
       <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+<<<<<<< HEAD
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+=======
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );

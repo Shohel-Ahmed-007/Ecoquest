@@ -35,6 +35,7 @@ export function AuthProvider({ children }) {
   const refreshUser = async () => {
     try {
       const { data } = await api.get('/users/me');
+<<<<<<< HEAD
       const normalized = {
         ...data,
         id:     data._id || data.id,
@@ -42,6 +43,10 @@ export function AuthProvider({ children }) {
       };
       setUser(normalized);
       localStorage.setItem('user', JSON.stringify(normalized));
+=======
+      setUser(data);
+      localStorage.setItem('user', JSON.stringify(data));
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
     } catch {}
   };
 

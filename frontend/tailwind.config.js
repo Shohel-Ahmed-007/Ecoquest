@@ -22,8 +22,12 @@ export default {
         },
       },
       fontFamily: {
+<<<<<<< HEAD
         sans: ['Outfit', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
+=======
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
       },
       backgroundImage: {
         'eco-gradient': 'linear-gradient(135deg, #0a150d 0%, #0f2d18 50%, #0a1a10 100%)',

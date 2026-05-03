@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const router  = require('express').Router();
 const path    = require('path');
 const fs      = require('fs');
@@ -41,12 +42,23 @@ router.get('/me', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -verificationToken -verificationTokenExpiry');
     if (!user) return res.status(404).json({ message: 'User not found' });
+=======
+const router = require('express').Router();
+const auth = require('../middleware/auth');
+const User = require('../models/User');
+
+// Get current user profile
+router.get('/me', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
     res.json(user);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
+<<<<<<< HEAD
 // ─────────────────────────────────────────────────────────────
 // PUT /api/users/me — update profile (text fields + optional image)
 // ─────────────────────────────────────────────────────────────
@@ -86,10 +98,24 @@ router.put('/me', auth, upload.single('avatar'), async (req, res) => {
     res.json(user);
   } catch (err) {
     console.error('Profile update error:', err.message);
+=======
+// Update profile
+router.put('/me', auth, async (req, res) => {
+  try {
+    const { name, class: userClass, school, interests } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { name, class: userClass, school, interests },
+      { new: true }
+    ).select('-password');
+    res.json(user);
+  } catch (err) {
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
     res.status(500).json({ message: err.message });
   }
 });
 
+<<<<<<< HEAD
 // ─────────────────────────────────────────────────────────────
 // GET /api/users/students — all students (teacher only)
 // ─────────────────────────────────────────────────────────────
@@ -99,6 +125,13 @@ router.get('/students', auth, async (req, res) => {
     const students = await User.find({ role: 'student' })
       .select('-password -verificationToken -verificationTokenExpiry')
       .sort({ xp: -1 });
+=======
+// Get all students (teacher only)
+router.get('/students', auth, async (req, res) => {
+  try {
+    if (req.user.role !== 'teacher') return res.status(403).json({ message: 'Forbidden' });
+    const students = await User.find({ role: 'student' }).select('-password').sort({ xp: -1 });
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
     res.json(students);
   } catch (err) {
     res.status(500).json({ message: err.message });

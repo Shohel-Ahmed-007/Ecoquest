@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const Submission = require('../models/Submission');
 const User = require('../models/User');
+<<<<<<< HEAD
 const Task = require('../models/Task');
 const Notification = require('../models/Notification');
 const { updateProgress } = require('../utils/userProgress');
@@ -54,6 +55,15 @@ const upload = multer({
     cb(new Error('Only image files (jpg/png/gif/webp) or video files (mp4/mov/avi/mkv/webm) are allowed'));
   },
 });
+=======
+const { updateProgress } = require('../utils/userProgress');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, path.join(__dirname, '../uploads')),
+  filename: (req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`),
+});
+const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
 
 // Get submissions (student: own; teacher: all pending)
 router.get('/', auth, async (req, res) => {
@@ -75,6 +85,7 @@ router.get('/', auth, async (req, res) => {
 // Create submission (student)
 router.post('/', auth, upload.single('image'), async (req, res) => {
   try {
+<<<<<<< HEAD
     // Per-type size enforcement
     if (req.file) {
       const ext = path.extname(req.file.originalname);
@@ -88,6 +99,8 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
       }
     }
 
+=======
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
     const { taskId, description } = req.body;
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : '';
 
@@ -99,6 +112,7 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
       status: 'pending',
     });
 
+<<<<<<< HEAD
     // Notify the teacher who created this task
     const task = await Task.findById(taskId);
     if (task?.createdBy) {
@@ -112,6 +126,8 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
       });
     }
 
+=======
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
     res.status(201).json(sub);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -139,6 +155,7 @@ router.put('/:id/review', auth, async (req, res) => {
     }
 
     await sub.save();
+<<<<<<< HEAD
 
     // Notify the student about review result
     const teacher = await User.findById(req.user.id).select('name');
@@ -152,6 +169,8 @@ router.put('/:id/review', auth, async (req, res) => {
       taskTitle: sub.task?.title || '',
     });
 
+=======
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
     res.json(sub);
   } catch (err) {
     res.status(500).json({ message: err.message });

@@ -72,7 +72,10 @@ async function seed() {
     password: teacherPwd,
     role: 'teacher',
     school: 'Green Valley School',
+<<<<<<< HEAD
     isVerified: true, // seed users are pre-verified
+=======
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
   });
 
   // Create students
@@ -83,7 +86,11 @@ async function seed() {
     { name: 'Sneha Rao', email: 'sneha@ecoquest.com', class: 'Class 9', xp: 680, level: 2, streak: 5 },
   ];
   const studentPwd = await bcrypt.hash('student123', 10);
+<<<<<<< HEAD
   await User.insertMany(studentData.map((s) => ({ ...s, password: studentPwd, role: 'student', school: 'Green Valley School', isVerified: true })));
+=======
+  await User.insertMany(studentData.map((s) => ({ ...s, password: studentPwd, role: 'student', school: 'Green Valley School' })));
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
 
   // Create tasks
   await Task.insertMany(tasks.map((t) => ({ ...t, createdBy: teacher._id })));

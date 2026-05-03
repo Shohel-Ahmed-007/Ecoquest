@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 
+<<<<<<< HEAD
 // Load environment variables from .env (local) or from env_file (docker)
 dotenv.config();
 
@@ -24,6 +25,15 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
   ? true  // nginx proxies from same origin, so all requests are same-origin
   : ['http://localhost:5173', 'http://127.0.0.1:5173'];
 
+=======
+dotenv.config();
+
+const app = express();
+
+const allowedOrigins = process.env.NODE_ENV === 'production'
+  ? true  // nginx proxies from same origin, so all requests are same-origin
+  : 'http://localhost:5173';
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
 app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -36,6 +46,7 @@ app.use('/api/quizzes', require('./routes/quizzes'));
 app.use('/api/submissions', require('./routes/submissions'));
 app.use('/api/leaderboard', require('./routes/leaderboard'));
 app.use('/api/analytics', require('./routes/analytics'));
+<<<<<<< HEAD
 app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/notes', require('./routes/notes'));
 app.use('/api/subjects', require('./routes/subjects'));
@@ -47,12 +58,17 @@ app.get('/api/health', (req, res) => res.json({
   env: process.env.NODE_ENV,
   db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
 }));
+=======
+
+app.get('/api/health', (req, res) => res.json({ status: 'ok', message: 'EcoQuest API running' }));
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
 
 const PORT = process.env.PORT || 5000;
 
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
+<<<<<<< HEAD
     console.log('✅ MongoDB connected');
     console.log(`🌍 Environment: ${process.env.NODE_ENV}`);
 
@@ -74,3 +90,9 @@ mongoose
     console.error('   Check your MONGO_URI in .env / .env.docker');
     process.exit(1);
   });
+=======
+    console.log('MongoDB connected');
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  })
+  .catch((err) => console.error('MongoDB connection error:', err));
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d

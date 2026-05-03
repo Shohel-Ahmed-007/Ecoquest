@@ -24,7 +24,11 @@ export default function Onboarding() {
   const finish = async () => {
     setLoading(true);
     try {
+<<<<<<< HEAD
       await api.put('/users/me', { interests: selected, ecoLevel: level });
+=======
+      await api.put('/users/me', { interests: selected });
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
       await refreshUser();
     } catch {} finally {
       navigate(user?.role === 'teacher' ? '/teacher' : '/dashboard');

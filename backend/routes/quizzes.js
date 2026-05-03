@@ -40,6 +40,7 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // Update quiz (teacher only)
 router.put('/:id', auth, async (req, res) => {
   try {
@@ -62,6 +63,8 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
+=======
+>>>>>>> 0a438a8b55346cfc102d70054270e29f3136dd0d
 // Submit quiz answers (student)
 router.post('/:id/submit', auth, async (req, res) => {
   try {
